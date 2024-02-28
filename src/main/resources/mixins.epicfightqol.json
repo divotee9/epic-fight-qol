@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "compatibilityLevel": "JAVA_17",
+    "package": "com.divot.epicfightqol.mixins",
+    "client": [
+      "epicfight.client.world.capabilities.entitypatch.player.MixinAbstractClientPlayerPatch", 
+      "epicfight.client.world.capabilities.entitypatch.player.MixinLocalPlayerPatch"
+    ],
+    "injectors": {
+      "defaultRequire": 1
+    },
+    "refmap": "mixins.epicfightqol.refmap.json"
+  }
+  
