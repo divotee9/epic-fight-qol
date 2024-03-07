@@ -40,7 +40,7 @@ public class EventHandler {
     private static final Minecraft mc = Minecraft.getInstance();
 
     public static boolean checkUseItem(ItemStack item) {
-        if (Config.CLIENT.epicItems().contains(ForgeRegistries.ITEMS.getKey(item.getItem()).toString())) {
+        if (Client.CLIENT.epicItems().contains(ForgeRegistries.ITEMS.getKey(item.getItem()).toString())) {
             return true;
         }
         return false;
@@ -56,14 +56,13 @@ public class EventHandler {
     @SubscribeEvent
     public static void useEvent (LivingEntityUseItemEvent.Start event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.epicItems() != null) {
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.epicItems() != null) {
 
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
 
             if (checkUseItem(event.getItem()) && ppplayer.isBattleMode()) {
                 
                 epicUsing = true;
-                //IHandlerPatch handledPlayer = (IHandlerPatch)ClientEngine.getInstance().getPlayerPatch();
                 //EpicFightQOL.LOGGER.info("used");
                 if(ppplayer.isBattleMode()){
                     ppplayer.toMiningMode(true);
@@ -91,7 +90,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void aimEvent (InputEvent.MouseButton.Post event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getEpicAiming()) {
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getEpicAiming()) {
 
             if (AimingHandler.get().isAiming()) {
                 epicUsing = true;
@@ -109,7 +108,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void unaimEvent (InputEvent.MouseButton.Post event){
 
-        if (mc.player != null && !mc.isPaused() && epicUsing && Config.CLIENT.getEpicAiming()) {
+        if (mc.player != null && !mc.isPaused() && epicUsing && Client.CLIENT.getEpicAiming()) {
 
             if (!AimingHandler.get().isAiming()){
 
@@ -127,7 +126,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void keyDodge (InputEvent.Key event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getparkourDodge()){
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getparkourDodge()){
 
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
             
@@ -169,7 +168,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void mouseDodge (InputEvent.MouseButton event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getparkourDodge()){
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getparkourDodge()){
 
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
             
@@ -212,7 +211,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void shiftEvent (InputEvent.Key event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getBattleShift() && !manualSwitch){
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getBattleShift() && !manualSwitch){
             if (event.getAction() == 1 && event.getKey() == GLFW.GLFW_KEY_LEFT_SHIFT) {
 
                 LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);

@@ -9,11 +9,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Config {
+public class Client {
     public static final ForgeConfigSpec SPEC;
     public static final ClientConfig CLIENT;
 
-    public Config() {
+    public Client() {
     }
 
 

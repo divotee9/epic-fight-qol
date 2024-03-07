@@ -7,6 +7,9 @@
       "epicfight.client.world.capabilities.entitypatch.player.MixinAbstractClientPlayerPatch", 
       "epicfight.client.world.capabilities.entitypatch.player.MixinLocalPlayerPatch"
     ],
+    "mixins": [
+      "parcool.common.event.MixinEventAttachCapability"
+    ],
     "injectors": {
       "defaultRequire": 1
     },
