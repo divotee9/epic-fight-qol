@@ -87,21 +87,24 @@ dependencies {
     
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation fg.deobf("curse.maven:epic-fight-mod-405076:5064418")
+    implementation fg.deobf("curse.maven:epic-fight-mod-405076:5159623")
 
-    implementation fg.deobf("curse.maven:epic-compat-parcool-974309:5107507")
+    implementation fg.deobf("curse.maven:epic-compat-parcool-974309:5138296")
 
     implementation fg.deobf("curse.maven:parcool-482378:4944983")
+    
+    implementation fg.deobf("curse.maven:mrcrayfishs-gun-mod-unofficial-945471:5201954")
 
-    implementation fg.deobf("curse.maven:mrcrayfishs-gun-mod-unofficial-945471:5127675")
+    implementation fg.deobf("curse.maven:epic-tweaks-974080:5137958")
 
-    implementation fg.deobf("curse.maven:framework-549225:5098255")
+    implementation fg.deobf("curse.maven:framework-549225:5180972")
 
-    implementation fg.deobf("curse.maven:epic-tweaks-974080:5103562")
+    implementation('cpw.mods:securejarhandler') { version { strictly '2.1.10' } }
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+    //annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+//
+    //compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
 
 }
 
@@ -121,7 +124,7 @@ tasks.named('processResources', ProcessResources).configure {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', 'mixins.epicfightqol.json']) {
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', 'mixins.epicfightintegration.json']) {
         expand replaceProperties + [project: project]
     }
 }
@@ -137,7 +140,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'MixinConfigs': 'mixins.epicfightqol.json'
+                'MixinConfigs': 'mixins.epicfightintegration.json'
         ])
     }
 

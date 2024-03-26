@@ -1,0 +1,17 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "compatibilityLevel": "JAVA_17",
+    "package": "com.divot.epicfightintegration.mixins",
+    "mixins": [
+      "parcool.common.event.MixinEventAttachCapability",
+      "epicfight.world.capabilities.entitypatch.player.MixinPlayerPatch",
+      "epicfight.client.world.capabilities.entitypatch.player.MixinAbstractClientPlayerPatch", 
+      "epicfight.client.world.capabilities.entitypatch.player.MixinLocalPlayerPatch"
+    ],
+    "injectors": {
+      "defaultRequire": 1
+    },
+    "refmap": "mixins.epicfightintegration.refmap.json"
+  }
+  
