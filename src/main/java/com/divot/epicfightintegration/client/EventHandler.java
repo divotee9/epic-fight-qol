@@ -1,4 +1,4 @@
-package com.divot.epicfightqol;
+package com.divot.epicfightintegration.client;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -20,7 +20,12 @@ import org.lwjgl.glfw.GLFW;
 import com.alrex.parcool.common.action.Action;
 import com.alrex.parcool.common.action.impl.FastRun;
 import com.alrex.parcool.common.capability.Parkourability;
+import com.divot.epicfightintegration.config.Client;
+import com.divot.epicfightintegration.network.CPCancelEpic;
+import com.divot.epicfightintegration.network.NetworkHandler;
+import com.divot.epicfightintegration.proxy.ServerProxy;
 import com.gitlab.srcmc.epiccompat_parcool.forge.client.capabilities.IParkourPlayerPatch;
+import com.gitlab.srcmc.epiccompat_parcool.forge.network.client.CPSetParkourActive;
 import com.mrcrayfish.guns.client.handler.AimingHandler;
 
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -40,7 +45,7 @@ public class EventHandler {
     private static final Minecraft mc = Minecraft.getInstance();
 
     public static boolean checkUseItem(ItemStack item) {
-        if (Config.CLIENT.epicItems().contains(ForgeRegistries.ITEMS.getKey(item.getItem()).toString())) {
+        if (Client.CLIENT.epicItems().contains(ForgeRegistries.ITEMS.getKey(item.getItem()).toString())) {
             return true;
         }
         return false;
@@ -56,16 +61,18 @@ public class EventHandler {
     @SubscribeEvent
     public static void useEvent (LivingEntityUseItemEvent.Start event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.epicItems() != null) {
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.epicItems() != null) {
 
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
 
             if (checkUseItem(event.getItem()) && ppplayer.isBattleMode()) {
-                
+
                 epicUsing = true;
-                //IHandlerPatch handledPlayer = (IHandlerPatch)ClientEngine.getInstance().getPlayerPatch();
                 //EpicFightQOL.LOGGER.info("used");
                 if(ppplayer.isBattleMode()){
+                    IIntegratedPlayerPatch iplayer = (IIntegratedPlayerPatch)ppplayer;
+                    iplayer.setEpicCancelled(epicUsing);
+                    NetworkHandler.sendToServer(new CPCancelEpic(epicUsing));
                     ppplayer.toMiningMode(true);
                 }
             }
@@ -80,9 +87,11 @@ public class EventHandler {
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
 
             epicUsing = false ;
-                
             //EpicFightQOL.LOGGER.info("used");
             if(!ppplayer.isBattleMode() && !manualSwitch && !shiftSwitch){
+                IIntegratedPlayerPatch iplayer = (IIntegratedPlayerPatch)ppplayer;
+                iplayer.setEpicCancelled(epicUsing);
+                NetworkHandler.sendToServer(new CPCancelEpic(epicUsing));
                 ppplayer.toBattleMode(true);
             }
         }
@@ -91,7 +100,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void aimEvent (InputEvent.MouseButton.Post event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getEpicAiming()) {
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getEpicAiming()) {
 
             if (AimingHandler.get().isAiming()) {
                 epicUsing = true;
@@ -100,6 +109,9 @@ public class EventHandler {
                 LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
 
                 if(ppplayer.isBattleMode()){
+                    IIntegratedPlayerPatch iplayer = (IIntegratedPlayerPatch)ppplayer;
+                    iplayer.setEpicCancelled(epicUsing);
+                    NetworkHandler.sendToServer(new CPCancelEpic(epicUsing));
                     ppplayer.toMiningMode(true);
                 }
             }
@@ -109,7 +121,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void unaimEvent (InputEvent.MouseButton.Post event){
 
-        if (mc.player != null && !mc.isPaused() && epicUsing && Config.CLIENT.getEpicAiming()) {
+        if (mc.player != null && !mc.isPaused() && epicUsing && Client.CLIENT.getEpicAiming()) {
 
             if (!AimingHandler.get().isAiming()){
 
@@ -118,6 +130,9 @@ public class EventHandler {
                 LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
 
                 if(!ppplayer.isBattleMode()){
+                IIntegratedPlayerPatch iplayer = (IIntegratedPlayerPatch)ppplayer;
+                iplayer.setEpicCancelled(epicUsing);
+                NetworkHandler.sendToServer(new CPCancelEpic(epicUsing));
                 ppplayer.toBattleMode(true);
                 }
             }
@@ -127,7 +142,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void keyDodge (InputEvent.Key event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getparkourDodge()){
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getparkourDodge()){
 
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
             
@@ -152,7 +167,7 @@ public class EventHandler {
                                 //pPlayer.setParkourActive(false);
                                 //NetworkManager.sendToServer(new CPSetParkourActive(false));
                                 //EpicParkour.LOGGER.info("dodge interupt");
-                                KeyMapping.click(EpicFightKeyMappings.DODGE.getKey());
+                                //KeyMapping.click(EpicFightKeyMappings.DODGE.getKey());
 
                                 return;
                             }
@@ -169,7 +184,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void mouseDodge (InputEvent.MouseButton event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getparkourDodge()){
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getparkourDodge()){
 
             LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
             
@@ -194,7 +209,7 @@ public class EventHandler {
                                 //pPlayer.setParkourActive(false);
                                 //NetworkManager.sendToServer(new CPSetParkourActive(false));
                                 //EpicParkour.LOGGER.info("dodge interupt");
-                                KeyMapping.click(EpicFightKeyMappings.DODGE.getKey());
+                                //KeyMapping.click(EpicFightKeyMappings.DODGE.getKey());
 
                                 return;
                             }
@@ -212,7 +227,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void shiftEvent (InputEvent.Key event){
 
-        if (mc.player != null && !mc.isPaused() && Config.CLIENT.getBattleShift() && !manualSwitch){
+        if (mc.player != null && !mc.isPaused() && Client.CLIENT.getBattleShift() && !manualSwitch){
             if (event.getAction() == 1 && event.getKey() == GLFW.GLFW_KEY_LEFT_SHIFT) {
 
                 LocalPlayerPatch ppplayer = EpicFightCapabilities.getEntityPatch(mc.player, LocalPlayerPatch.class);
@@ -221,9 +236,7 @@ public class EventHandler {
 
                     ppplayer.toMiningMode(true);
                     //EpicParkour.LOGGER.info("shift press");
-
                     shiftSwitch = true;
-        
                     return;
                 }
                 return;
@@ -297,7 +310,9 @@ public class EventHandler {
 
             if (checkHeldItem(mc.player.getMainHandItem()) && !ppplayer.isBattleMode() && !manualSwitch){
                 ppplayer.toBattleMode(true);
-
+                IIntegratedPlayerPatch iplayer = (IIntegratedPlayerPatch)ppplayer;
+                iplayer.setEpicCancelled(epicHolding);
+                NetworkHandler.sendToServer(new CPCancelEpic(epicUsing));
                 //EpicParkour.LOGGER.info("unequipped");
             }
         }

@@ -1,4 +1,4 @@
-package com.divot.epicfightqol;
+package com.divot.epicfightintegration.config;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -9,11 +9,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Config {
+public class Client {
     public static final ForgeConfigSpec SPEC;
     public static final ClientConfig CLIENT;
 
-    public Config() {
+    public Client() {
     }
 
 

@@ -41,7 +41,7 @@ authors="${mod_authors}" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''${mod_description}'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.epicfightqol]] #optional
+[[dependencies.epicfightintegration]] #optional
 # the modid of the dependency
 modId="forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
@@ -55,35 +55,35 @@ ordering="NONE"
 # Side this dependency is applied on - BOTH, CLIENT, or SERVER
 side="BOTH"
 # Here's another dependency
-[[dependencies.epicfightqol]]
+[[dependencies.epicfightintegration]]
 modId="minecraft"
 mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
-[[dependencies.epicfightqol]]
+[[dependencies.epicfightintegration]]
     modId="epicfight"
     mandatory=true
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[19,]"
     ordering="AFTER"
     side="BOTH"
-[[dependencies.epicfightqol]]
+[[dependencies.epicfightintegration]]
     modId="parcool"
     mandatory=false
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.19,]"
     ordering="AFTER"
     side="BOTH"
-[[dependencies.epicfightqol]]
+[[dependencies.epicfightintegration]]
     modId="epiccompat_parcool"
     mandatory=false
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.0,]"
     ordering="AFTER"
     side="BOTH"
-    [[dependencies.epicfightqol]]
+[[dependencies.epicfightintegration]]
     modId="cgm"
     mandatory=false
     # This version range declares a minimum of the current minecraft version up to but not including the next major version

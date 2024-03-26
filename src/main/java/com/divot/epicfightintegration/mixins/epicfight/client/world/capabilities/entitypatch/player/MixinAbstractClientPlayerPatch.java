@@ -1,12 +1,12 @@
-package com.divot.epicfightqol.mixins.epicfight.client.world.capabilities.entitypatch.player;
-
-import com.divot.epicfightqol.EventHandler;
+package com.divot.epicfightintegration.mixins.epicfight.client.world.capabilities.entitypatch.player;
 
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.divot.epicfightintegration.client.IIntegratedPlayerPatch;
 
 import yesman.epicfight.client.world.capabilites.entitypatch.player.AbstractClientPlayerPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
@@ -21,8 +21,8 @@ public abstract class MixinAbstractClientPlayerPatch<T extends AbstractClientPla
    )
 
    public void onOverrideRender(CallbackInfoReturnable<Boolean> ci) {
-      
-      if(EventHandler.getEpicUsing() || EventHandler.getEpicHolding()){
+      IIntegratedPlayerPatch iPlayer = (IIntegratedPlayerPatch)this;
+      if(iPlayer.isEpicCancelled()){
         ci.setReturnValue(false);
         ci.cancel();
         //EpicFightQOL.LOGGER.info("cancelled");

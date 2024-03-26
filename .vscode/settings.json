@@ -1,14 +1,14 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.project.referencedLibraries": {
-        "include": [
-            "lib/**/*.jar"
-        ],
-        "exclude": [
-            "c:\\Users\\kai-b\\.gradle\\caches\\forge_gradle\\deobf_dependencies\\curse\\maven\\epic-fight-mod-405076\\4861795_mapped_parchment_2023.09.03-1.20.1\\epic-fight-mod-405076-4861795_mapped_parchment_2023.09.03-1.20.1.jar"
-        ]
-    },
+    //"java.project.referencedLibraries": {
+    //    "include": [
+    //        "lib/**/*.jar"
+    //    ],
+    //    "exclude": [
+    //        "c:\\Users\\kai-b\\.gradle\\caches\\forge_gradle\\deobf_dependencies\\curse\\maven\\epic-fight-mod-405076\\4861795_mapped_parchment_2023.09.03-1.20.1\\epic-fight-mod-405076-4861795_mapped_parchment_2023.09.03-1.20.1.jar"
+    //    ]
+    //},
     "java.dependency.syncWithFolderExplorer": false,
     "java.dependency.packagePresentation": "hierarchical"
 }
